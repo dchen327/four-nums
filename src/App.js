@@ -16,7 +16,20 @@ function App() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
+      <div className="grid grid-cols-2 gap-4 m-3">
+        <div className="flex items-center justify-center p-4 rounded-md text-5xl bg-gray-200 border border-black aspect-square">
+          1
+        </div>
+        <div className="flex items-center justify-center p-4 rounded-md text-5xl bg-gray-200 border border-black aspect-square">
+          2
+        </div>
+        <div className="flex items-center justify-center p-4 rounded-md text-5xl bg-gray-200 border border-black aspect-square">
+          3
+        </div>
+        <div className="flex items-center justify-center p-4 rounded-md text-5xl bg-gray-200 border border-black aspect-square">
+          4
+        </div>
+      </div>
       <button onClick={handleClick}>Call API</button>
     </div>
   );
