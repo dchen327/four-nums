@@ -108,11 +108,18 @@ function App() {
     }
   };
 
-  const handleNewPuzzleClick = () => {
+  const handleNewPuzzleClick = async () => {
     setShowModal(false);
-    const newGameNums = [1, 2, 3, 4].map(
-      () => new Fraction(Math.floor(Math.random() * 10) + 1)
-    );
+    const response = await fetch("/api/index.py", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ params: "hi" }),
+    });
+    const data = await response.json();
+
+    const newGameNums = data.gameNums.map((num) => new Fraction(num));
 
     setGameNums(newGameNums);
     setOriginalGameNums(newGameNums);

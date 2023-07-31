@@ -1,5 +1,6 @@
 from http.server import BaseHTTPRequestHandler
 import json
+import random
 
 
 class handler(BaseHTTPRequestHandler):
@@ -15,4 +16,5 @@ class handler(BaseHTTPRequestHandler):
 
     @staticmethod
     def create_puzzle(params):
-        return {'puzzle': '1 1 3 8', 'solutions': ['1 x 1 x 3 x 8']}
+        four_nums = [random.randint(1, 12) for _ in range(4)]
+        return {'gameNums': four_nums}
