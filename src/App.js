@@ -21,6 +21,7 @@ function App() {
   const operations = ["+", "-", "x", "÷"];
   const numberButtonsRef = useRef(null);
   const opButtonsRef = useRef(null);
+  const rotationAngles = [-45, 45, 225, 135];
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -135,16 +136,31 @@ function App() {
   return (
     <div className="flex flex-col items-center h-screen">
       <div
-        className="grow grid grid-cols-2 gap-4 m-3 aspect-square mt-10"
-        style={{ maxWidth: "35vh ", maxHeight: "35vh" }}
+        className="rotate-45 grow grid grid-cols-2 gap-4 m-10 aspect-square mt-10"
+        style={{
+          maxWidth: "35vh ",
+          maxHeight: "35vh",
+        }}
         ref={numberButtonsRef}
       >
-        {gameNums.map((num, idx) => (
+        {/* {gameNums.map((num, idx) => (
           <div
             key={idx}
             className={`flex items-center justify-center p-2 rounded-md text-7xl border aspect-square ${
               selectedNumberIdx === idx ? "bg-blue-200" : "bg-gray-200"
             }`}
+            onClick={() => handleNumberClick(idx)}
+          >
+            {num !== "" && num.toFraction()}
+          </div>
+        ))} */}
+        {gameNums.map((num, idx) => (
+          <div
+            key={idx}
+            className={`flex items-center justify-center p-2 rounded-full text-5xl border aspect-square ${
+              selectedNumberIdx === idx ? "bg-blue-200" : "bg-gray-200"
+            }`}
+            style={{ transform: `rotate(${rotationAngles[idx]}deg)` }}
             onClick={() => handleNumberClick(idx)}
           >
             {num !== "" && num.toFraction()}
