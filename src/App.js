@@ -4,8 +4,19 @@ import Fraction from "fraction.js";
 function App() {
   const [selectedNumberIdx, setSelectedNumberIdx] = useState(null);
   const [selectedOpIdx, setSelectedOpIdx] = useState(null);
-  const [gameNums, setGameNums] = useState([2, 3, 4, 6]);
-  const [originalGameNums, setOriginalGameNums] = useState([2, 3, 4, 6]);
+  const [gameNums, setGameNums] = useState([
+    new Fraction(2),
+    new Fraction(3),
+    new Fraction(4),
+    new Fraction(6),
+  ]);
+  const [originalGameNums, setOriginalGameNums] = useState([
+    new Fraction(2),
+    new Fraction(3),
+    new Fraction(4),
+    new Fraction(6),
+  ]);
+  const [showModal, setShowModal] = useState(false);
   const [gameHistory, setGameHistory] = useState([]);
   const operations = ["+", "-", "x", "÷"];
   const numberButtonsRef = useRef(null);
@@ -29,14 +40,24 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    console.log(gameNums);
+    if (
+      gameNums.filter((num) => num !== "").length === 1 &&
+      gameNums.some((num) => num && num.valueOf() === 24)
+    ) {
+      setShowModal(true);
+    }
+  }, [gameNums]);
+
   const handleNumberClick = (idx) => {
     if (
       gameNums[idx] !== "" &&
       selectedNumberIdx !== null &&
       selectedOpIdx !== null
     ) {
-      const num1 = new Fraction(gameNums[selectedNumberIdx]);
-      const num2 = new Fraction(gameNums[idx]);
+      const num1 = gameNums[selectedNumberIdx];
+      const num2 = gameNums[idx];
       let result;
       switch (selectedOpIdx) {
         case 0:
@@ -51,14 +72,12 @@ function App() {
         case 3:
           result = num1.div(num2);
           break;
-        default:
-          result = null;
       }
       setSelectedNumberIdx(idx);
       setSelectedOpIdx(null);
       setGameNums((prevNums) => {
         const newNums = [...prevNums];
-        newNums[idx] = result.toFraction();
+        newNums[idx] = result;
         newNums[selectedNumberIdx] = "";
         return newNums;
       });
@@ -90,9 +109,11 @@ function App() {
   };
 
   const handleNewPuzzleClick = () => {
+    setShowModal(false);
     const newGameNums = [1, 2, 3, 4].map(
-      () => Math.floor(Math.random() * 10) + 1
+      () => new Fraction(Math.floor(Math.random() * 10) + 1)
     );
+
     setGameNums(newGameNums);
     setOriginalGameNums(newGameNums);
     setSelectedNumberIdx(null);
@@ -116,7 +137,7 @@ function App() {
             }`}
             onClick={() => handleNumberClick(idx)}
           >
-            {num}
+            {num !== "" && num.toFraction()}
           </div>
         ))}
       </div>
@@ -139,7 +160,18 @@ function App() {
         <button onClick={handleNewPuzzleClick}>New Puzzle</button>
         <button onClick={handleHintClick}>Hint</button>
       </div>
-      <button onClick={() => console.log(gameNums)}>Call API</button>
+      {showModal && (
+        <div className="fixed inset-0 z-10 flex items-center justify-center">
+          <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+          <div className="bg-white p-8 rounded-lg z-10">
+            <h2 className="text-2xl font-bold mb-4">Congratulations!</h2>
+            <p>You have won the game!</p>
+            <button className="mt-4" onClick={handleNewPuzzleClick}>
+              Play again
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
