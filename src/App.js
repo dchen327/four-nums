@@ -41,7 +41,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log(gameNums);
     if (
       gameNums.filter((num) => num !== "").length === 1 &&
       gameNums.some((num) => num && num.valueOf() === 24)
@@ -134,12 +133,16 @@ function App() {
   };
 
   return (
-    <div>
-      <div className="grid grid-cols-2 gap-4 m-3" ref={numberButtonsRef}>
+    <div className="flex flex-col items-center h-screen">
+      <div
+        className="grow grid grid-cols-2 gap-4 m-3 aspect-square mt-10"
+        style={{ maxWidth: "35vh ", maxHeight: "35vh" }}
+        ref={numberButtonsRef}
+      >
         {gameNums.map((num, idx) => (
           <div
             key={idx}
-            className={`flex items-center justify-center p-4 rounded-md text-5xl border aspect-square ${
+            className={`flex items-center justify-center p-2 rounded-md text-7xl border aspect-square ${
               selectedNumberIdx === idx ? "bg-blue-200" : "bg-gray-200"
             }`}
             onClick={() => handleNumberClick(idx)}
@@ -152,7 +155,7 @@ function App() {
         {operations.map((op, idx) => (
           <div
             key={idx}
-            className={`flex items-center justify-center p-4 rounded-md text-3xl border aspect-square ${
+            className={`flex items-center justify-center p-4 rounded-md text-4xl border aspect-square ${
               selectedOpIdx === idx ? "bg-blue-200" : "bg-gray-200"
             }`}
             onClick={() => handleOpClick(idx)}
