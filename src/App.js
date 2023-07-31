@@ -1,34 +1,27 @@
-import React from "react";
-import "./App.css";
+import { useState } from "react";
 
 function App() {
-  const handleClick = async () => {
-    const response = await fetch("/api/index.py", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ params: "hi" }),
-    });
-    const data = await response.json();
-    console.log(data);
+  const [selected, setSelected] = useState(null);
+  const values = [2, 3, 4, 6];
+
+  const handleClick = (idx) => {
+    setSelected(idx);
   };
 
   return (
     <div>
       <div className="grid grid-cols-2 gap-4 m-3">
-        <div className="flex items-center justify-center p-4 rounded-md text-5xl bg-gray-200 border border-black aspect-square">
-          1
-        </div>
-        <div className="flex items-center justify-center p-4 rounded-md text-5xl bg-gray-200 border border-black aspect-square">
-          2
-        </div>
-        <div className="flex items-center justify-center p-4 rounded-md text-5xl bg-gray-200 border border-black aspect-square">
-          3
-        </div>
-        <div className="flex items-center justify-center p-4 rounded-md text-5xl bg-gray-200 border border-black aspect-square">
-          4
-        </div>
+        {values.map((num, idx) => (
+          <div
+            key={idx}
+            className={`flex items-center justify-center p-4 rounded-md text-5xl border aspect-square ${
+              selected === idx ? "bg-blue-200" : "bg-gray-200"
+            }`}
+            onClick={() => handleClick(idx)}
+          >
+            {num}
+          </div>
+        ))}
       </div>
       <button onClick={handleClick}>Call API</button>
     </div>
