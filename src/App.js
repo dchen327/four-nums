@@ -157,13 +157,15 @@ function App() {
         {gameNums.map((num, idx) => (
           <div
             key={idx}
-            className={`flex items-center justify-center p-2 rounded-full text-5xl border aspect-square ${
+            className={`flex items-center justify-center p-2 rounded-full text-6xl border aspect-square' ${
               selectedNumberIdx === idx ? "bg-blue-200" : "bg-gray-200"
-            }`}
+            } font-serif`}
             style={{ transform: `rotate(${rotationAngles[idx]}deg)` }}
             onClick={() => handleNumberClick(idx)}
           >
-            {num !== "" && num.toFraction()}
+            <p className="flex items-center justify-center font-mono overflow-hidden select-none h-full">
+              {num !== "" && num.toFraction()}
+            </p>
           </div>
         ))}
       </div>
