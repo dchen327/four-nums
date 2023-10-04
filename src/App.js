@@ -2,6 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import Fraction from "fraction.js";
 
 function App() {
+  const [difficulty, setDifficulty] = useState(0); // 0-3
+  const [randomness, setRandomness] = useState(true);
+  const [usedIDs, setUsedIDs] = useState([]);
   const [selectedNumberIdx, setSelectedNumberIdx] = useState(null);
   const [selectedOpIdx, setSelectedOpIdx] = useState(null);
   const [gameNums, setGameNums] = useState([
@@ -16,7 +19,8 @@ function App() {
     new Fraction(4),
     new Fraction(6),
   ]);
-  const [showModal, setShowModal] = useState(false);
+  const [showSolvedModal, setShowSolvedModal] = useState(false);
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [gameHistory, setGameHistory] = useState([]);
   const operations = ["+", "-", "x", "÷"];
   const numberButtonsRef = useRef(null);
@@ -46,7 +50,7 @@ function App() {
       gameNums.filter((num) => num !== "").length === 1 &&
       gameNums.some((num) => num && num.valueOf() === 24)
     ) {
-      setShowModal(true);
+      setShowSolvedModal(true);
     }
   }, [gameNums]);
 
@@ -109,7 +113,7 @@ function App() {
   };
 
   const handleNewPuzzleClick = async () => {
-    setShowModal(false);
+    setShowSolvedModal(false);
     const response = await fetch("/api/index.py", {
       method: "POST",
       headers: {
@@ -188,12 +192,13 @@ function App() {
         ))}
       </div>
       <div className="flex justify-center gap-4 m-3">
+        <button onClick={() => setShowSettingsModal(true)}>Settings</button>
         <button onClick={handleResetClick}>Reset</button>
         <button onClick={handleUndoClick}>Undo</button>
-        <button onClick={handleNewPuzzleClick}>New Puzzle</button>
         <button onClick={handleHintClick}>Hint</button>
+        <button onClick={handleNewPuzzleClick}>New Puzzle</button>
       </div>
-      {showModal && (
+      {showSolvedModal && (
         <div className="fixed inset-0 z-10 flex items-center justify-center">
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
           <div className="bg-white p-8 rounded-lg z-10">
@@ -202,6 +207,51 @@ function App() {
             <button className="mt-4" onClick={handleNewPuzzleClick}>
               Play again
             </button>
+          </div>
+        </div>
+      )}
+      {showSettingsModal && (
+        <div className="fixed inset-0 z-10 flex items-center justify-center">
+          <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+          <div className="bg-white p-8 rounded-lg z-10">
+            <div className="flex flex-row justify-between">
+              <h2 className="text-2xl font-bold mb-4">Settings</h2>
+              <button
+                className="text-gray-600 p-1 mb-4"
+                onClick={() => setShowSettingsModal(false)}
+              >
+                X
+              </button>
+            </div>
+            <div className="flex flex-row justify-between">
+              <label className="mr-2" htmlFor="difficulty">
+                Difficulty:
+              </label>
+              <select
+                name="difficulty"
+                id="difficulty"
+                value={difficulty}
+                onChange={(e) => setDifficulty(e.target.value)}
+              >
+                <option value={0}>Easy</option>
+                <option value={1}>Medium</option>
+                <option value={2}>Hard</option>
+                <option value={3}>Extreme</option>
+              </select>
+            </div>
+            <div className="flex flex-row justify-between">
+              <label className="mr-2" htmlFor="randomness">
+                Randomness:
+              </label>
+              <input
+                className="mr-4"
+                type="checkbox"
+                name="randomness"
+                id="randomness"
+                checked={randomness}
+                onChange={(e) => setRandomness(e.target.checked)}
+              />
+            </div>
           </div>
         </div>
       )}
