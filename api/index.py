@@ -1,9 +1,7 @@
-# %%
 from http.server import BaseHTTPRequestHandler
 import json
 import random
 import pandas as pd
-import seaborn as sns
 
 
 class handler(BaseHTTPRequestHandler):
