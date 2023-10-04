@@ -29,9 +29,9 @@ function App() {
   const rotationAngles = [-45, 45, 225, 135];
 
   // disable body scrolling
-  useEffect(() => {
-    disableBodyScroll(document.body);
-  }, []);
+  // useEffect(() => {
+  //   disableBodyScroll(document.body);
+  // }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -154,7 +154,7 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col items-center h-screen w-full mt-5">
+    <div className="flex flex-col items-center w-full mt-5">
       <div
         className="rotate-45 grow grid grid-cols-2 gap-4 m-10 aspect-square mt-10"
         style={{
@@ -177,7 +177,7 @@ function App() {
         {gameNums.map((num, idx) => (
           <div
             key={idx}
-            className={`flex items-center justify-center p-2 rounded-full text-6xl border aspect-square' ${
+            className={`flex items-center justify-center p-2 rounded-full text-6xl border aspect-square min-w-[100px] ${
               selectedNumberIdx === idx ? "bg-blue-200" : "bg-gray-200"
             }`}
             style={{
