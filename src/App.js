@@ -154,7 +154,7 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col items-center h-screen mt-5">
+    <div className="flex flex-col items-center h-full w-full mt-5">
       <div
         className="rotate-45 grow grid grid-cols-2 gap-4 m-10 aspect-square mt-10"
         style={{
