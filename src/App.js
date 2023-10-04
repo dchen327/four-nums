@@ -200,7 +200,10 @@ function App() {
       </div>
       {showSolvedModal && (
         <div className="fixed inset-0 z-10 flex items-center justify-center">
-          <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+          <div
+            className="absolute inset-0 bg-gray-500 opacity-75"
+            onClick={() => handleNewPuzzleClick()}
+          ></div>
           <div className="bg-white p-8 rounded-lg z-10">
             <h2 className="text-2xl font-bold mb-4">Congratulations!</h2>
             <p>You have won the game!</p>
@@ -212,7 +215,10 @@ function App() {
       )}
       {showSettingsModal && (
         <div className="fixed inset-0 z-10 flex items-center justify-center">
-          <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+          <div
+            className="absolute inset-0 bg-gray-500 opacity-75"
+            onClick={() => setShowSettingsModal(false)}
+          ></div>
           <div className="bg-white p-8 rounded-lg z-10">
             <div className="flex flex-row justify-between">
               <h2 className="text-2xl font-bold mb-4">Settings</h2>
