@@ -145,6 +145,14 @@ function App() {
     console.log("Hint clicked");
   };
 
+  const handleDifficultyChange = (value) => {
+    // if value is different than current difficulty, grab a new level
+    if (value !== difficulty) {
+      setDifficulty(value);
+      handleNewPuzzleClick();
+    }
+  };
+
   return (
     <div className="flex flex-col items-center h-screen mt-5">
       <div
@@ -245,7 +253,7 @@ function App() {
                 name="difficulty"
                 id="difficulty"
                 value={difficulty}
-                onChange={(e) => setDifficulty(e.target.value)}
+                onChange={(e) => handleDifficultyChange(e.target.value)}
               >
                 <option value={0}>Easy</option>
                 <option value={1}>Medium</option>
