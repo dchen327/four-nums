@@ -124,6 +124,8 @@ function App() {
     const data = await response.json();
 
     const newGameNums = data.gameNums.map((num) => new Fraction(num));
+    const puzzleID = data.puzzleID;
+    setUsedIDs((prevIDs) => [...prevIDs, puzzleID]);
 
     setGameNums(newGameNums);
     setOriginalGameNums(newGameNums);
@@ -138,7 +140,7 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col items-center h-screen">
+    <div className="flex flex-col items-center h-screen mt-5">
       <div
         className="rotate-45 grow grid grid-cols-2 gap-4 m-10 aspect-square mt-10"
         style={{
