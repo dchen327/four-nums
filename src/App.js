@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import Fraction from "fraction.js";
+import { disableBodyScroll } from "body-scroll-lock";
 
 function App() {
   const [difficulty, setDifficulty] = useState(0); // 0-3
@@ -26,6 +27,11 @@ function App() {
   const numberButtonsRef = useRef(null);
   const opButtonsRef = useRef(null);
   const rotationAngles = [-45, 45, 225, 135];
+
+  // disable body scrolling
+  useEffect(() => {
+    disableBodyScroll(document.body);
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -170,7 +176,7 @@ function App() {
             onClick={() => handleNumberClick(idx)}
           >
             <p
-              className={`flex items-center justify-center font-mono overflow-hidden select-none underline${
+              className={`flex items-center justify-center font-mono overflow-hidden select-none ${
                 num === "" && "invisible"
               }`}
             >
