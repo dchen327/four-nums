@@ -119,7 +119,7 @@ function App() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ usedIDs: [5], difficulty: 0, randomness: true }),
+      body: JSON.stringify({ usedIDs, difficulty, randomness }),
     });
     const data = await response.json();
 
@@ -170,7 +170,7 @@ function App() {
             onClick={() => handleNumberClick(idx)}
           >
             <p
-              className={`flex items-center justify-center font-mono overflow-hidden select-none ${
+              className={`flex items-center justify-center font-mono overflow-hidden select-none underline${
                 num === "" && "invisible"
               }`}
             >

@@ -28,7 +28,7 @@ class handler(BaseHTTPRequestHandler):
         df = pd.read_csv('api/24_difficulties.csv', index_col=0)
 
         used = set(params['usedIDs'])
-        difficulty = params['difficulty']
+        difficulty = int(params['difficulty'])
         randomness = params['randomness']
         available = set(
             range(difficulty_idxs[difficulty], difficulty_idxs[difficulty + 1])) - used
