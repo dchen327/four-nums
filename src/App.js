@@ -154,11 +154,11 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col items-center h-full w-full mt-5">
+    <div className="flex flex-col items-center h-screen w-full mt-5">
       <div
         className="rotate-45 grow grid grid-cols-2 gap-4 m-10 aspect-square mt-10"
         style={{
-          maxWidth: "35vh ",
+          maxWidth: "35vh",
           maxHeight: "35vh",
         }}
         ref={numberButtonsRef}
@@ -180,7 +180,9 @@ function App() {
             className={`flex items-center justify-center p-2 rounded-full text-6xl border aspect-square' ${
               selectedNumberIdx === idx ? "bg-blue-200" : "bg-gray-200"
             }`}
-            style={{ transform: `rotate(${rotationAngles[idx]}deg)` }}
+            style={{
+              transform: `rotate(${rotationAngles[idx]}deg)`,
+            }}
             onClick={() => handleNumberClick(idx)}
           >
             <p
