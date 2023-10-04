@@ -27,7 +27,7 @@ class handler(BaseHTTPRequestHandler):
         '''
         # easy, medium, hard, extreme (0%, 25%, 60%, 90%)
         difficulty_idxs = [1, 341, 817, 1226, 1363]  # i->i+1 for difficulty i
-        df = pd.read_csv('24_difficulties.csv', index_col=0)
+        df = pd.read_csv('api/24_difficulties.csv', index_col=0)
 
         used = set(params['usedIDs'])
         difficulty = params['difficulty']

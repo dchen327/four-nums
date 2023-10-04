@@ -115,7 +115,7 @@ function App() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ params: "hi" }),
+      body: JSON.stringify({ usedIDs: [5], difficulty: 0, randomness: true }),
     });
     const data = await response.json();
 
@@ -159,12 +159,17 @@ function App() {
             key={idx}
             className={`flex items-center justify-center p-2 rounded-full text-6xl border aspect-square' ${
               selectedNumberIdx === idx ? "bg-blue-200" : "bg-gray-200"
-            } font-serif`}
+            }`}
             style={{ transform: `rotate(${rotationAngles[idx]}deg)` }}
             onClick={() => handleNumberClick(idx)}
           >
-            <p className="flex items-center justify-center font-mono overflow-hidden select-none h-full">
-              {num !== "" && num.toFraction()}
+            <p
+              className={`flex items-center justify-center font-mono overflow-hidden select-none ${
+                num === "" && "invisible"
+              }`}
+            >
+              {/* invisible underscore to make the other circles not resize */}
+              {num === "" ? "_" : num.toFraction()}
             </p>
           </div>
         ))}
