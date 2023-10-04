@@ -1,6 +1,9 @@
+# %%
 from http.server import BaseHTTPRequestHandler
 import json
 import random
+import pandas as pd
+import seaborn as sns
 
 
 class handler(BaseHTTPRequestHandler):
@@ -16,5 +19,33 @@ class handler(BaseHTTPRequestHandler):
 
     @staticmethod
     def create_puzzle(params):
-        four_nums = [random.randint(1, 12) for _ in range(4)]
-        return {'gameNums': four_nums}
+        '''
+        params: 
+        - usedIDs: list of used puzzle IDs (1-1362)
+        - difficulty: list of difficulties (0-3)
+        - randomness: bool for whether or not to randomly insert other difficulties
+        '''
+        # easy, medium, hard, extreme (0%, 25%, 60%, 90%)
+        difficulty_idxs = [1, 341, 817, 1226, 1363]  # i->i+1 for difficulty i
+        df = pd.read_csv('24_difficulties.csv', index_col=0)
+
+        used = set(params['usedIDs'])
+        difficulty = params['difficulty']
+        randomness = params['randomness']
+        available = set(
+            range(difficulty_idxs[difficulty], difficulty_idxs[difficulty + 1])) - used
+
+        # with 10% chance, pick random puzzle
+        if randomness and random.random() < 0.2:
+            puzzle_idx = random.choice(list(set(range(1, 1363)) - used))
+        else:
+            puzzle_idx = random.choice(list(available))
+
+        four_nums = list(map(int, df['Puzzles'].iloc[puzzle_idx-1].split()))
+
+        return {'puzzleID': puzzle_idx, 'gameNums': four_nums}
+
+
+if __name__ == '__main__':
+    print(handler.create_puzzle({'usedIDs': [5],
+                                 'difficulty': 3, 'randomness': True}))
